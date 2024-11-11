@@ -51,29 +51,40 @@ public class Program
                     continue;
 
                 case 2:
-                    Console.WriteLine("Enter ID of the book you wish to update:");
-                    int updateId = int.Parse(Console.ReadLine());
-                    Console.WriteLine();
+                    while (true)
+                    {
+                        Console.WriteLine("Enter ID of the book you wish to update:");
+                        int updateId = int.Parse(Console.ReadLine());
+                        Book up = bookService.GetBookById(updateId);
+                        if (up == null)
+                        {
+                            Console.WriteLine("Book not found, try again");
+                            Console.WriteLine();
+                            continue;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter book title:");
+                            string uTitle = Console.ReadLine();
+                            Console.WriteLine("Enter book author:");
+                            string uAuthor = Console.ReadLine();
+                            Console.WriteLine("Enter book publication year:");
+                            int uPublicationYear = int.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter book genre:");
+                            string uGenre = Console.ReadLine();
+                            Console.WriteLine();
 
-                    Book up = bookRepo.GetBookById(updateId);
-                    Console.WriteLine("Enter book title:");
-                    string uTitle = Console.ReadLine();
-                    Console.WriteLine("Enter book author:");
-                    string uAuthor = Console.ReadLine();
-                    Console.WriteLine("Enter book publication year:");
-                    int uPublicationYear = int.Parse(Console.ReadLine());
-                    Console.WriteLine("Enter book genre:");
-                    string uGenre = Console.ReadLine();
-                    Console.WriteLine();
+                            up.Title = uTitle;
+                            up.Author = uAuthor;
+                            up.PublicationYear = uPublicationYear;
+                            up.Genre = uGenre;
 
-                    up.Title = uTitle;
-                    up.Author = uAuthor;
-                    up.PublicationYear = uPublicationYear;
-                    up.Genre = uGenre;
-
-                    bookRepo.UpdateBook(up);
-                    Console.WriteLine("Book added");
-                    Console.WriteLine();
+                            bookRepo.UpdateBook(up);
+                            Console.WriteLine("Book added");
+                            Console.WriteLine();
+                            break;
+                        }
+                    }
                     continue;
 
                 case 3:
@@ -171,13 +182,26 @@ public class Program
                     continue;
 
                 case 6:
-                    Console.WriteLine("Enter ID of the book you wish to delete:");
-                    int deleteId = int.Parse(Console.ReadLine());
-                    Console.WriteLine();
-
-                    bookRepo.DeleteBook(deleteId);
-                    Console.WriteLine("Book deleted");
-                    Console.WriteLine();
+                    while (true)
+                    {
+                        Console.WriteLine("Enter ID of the book you wish to delete:");
+                        int deleteId = int.Parse(Console.ReadLine());
+                        Book deletion = bookService.GetBookById(deleteId);
+                        Console.WriteLine();
+                        if (deletion == null)
+                        {
+                            Console.WriteLine("Book not found, try again");
+                            Console.WriteLine();
+                            continue;
+                        }
+                        else
+                        {
+                            bookRepo.DeleteBook(deleteId);
+                            Console.WriteLine("Book deleted");
+                            Console.WriteLine();
+                            break;
+                        };
+                    }
                     continue;
 
                 case 7:

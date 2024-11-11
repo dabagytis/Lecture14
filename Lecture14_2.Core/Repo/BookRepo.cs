@@ -64,12 +64,18 @@ namespace Lecture14_2.Core.Repo
 
         public Book GetBookById(int id)
         {
-            Book byId = new Book();
+            Book byId = null;
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
+                try
+                {
+                    byId = connection.QueryFirst<Book>("SELECT * FROM Books WHERE Id = @Id", new { Id = id });
+                }
+                catch
+                {
 
-                byId = connection.QueryFirst<Book>("SELECT * FROM Books WHERE Id = @Id", new { Id = id });
+                }
             }
             return byId;
         }
